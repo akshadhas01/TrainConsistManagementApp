@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 public class TrainConsistManagementApp {
 
@@ -61,10 +62,8 @@ public class TrainConsistManagementApp {
         // ===== UC4 =====
         System.out.println("\n=== UC4: Maintain Ordered Bogie Consist ===");
 
-        // Create LinkedList (maintains order)
         List<String> orderedTrain = new LinkedList<>();
 
-        // Add bogies
         orderedTrain.add("Engine");
         orderedTrain.add("Sleeper");
         orderedTrain.add("AC");
@@ -74,19 +73,36 @@ public class TrainConsistManagementApp {
         System.out.println("Initial Train Consist:");
         System.out.println(orderedTrain);
 
-        // Insert Pantry Car at position 2
         orderedTrain.add(2, "Pantry Car");
 
         System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
         System.out.println(orderedTrain);
 
-        // Remove first and last bogie
-        orderedTrain.remove(0); // remove first
-        orderedTrain.remove(orderedTrain.size() - 1); // remove last
+        orderedTrain.remove(0);
+        orderedTrain.remove(orderedTrain.size() - 1);
 
         System.out.println("\nAfter Removing First and Last Bogie:");
         System.out.println(orderedTrain);
 
         System.out.println("UC4 ordered consist operations completed...");
+
+
+        // ===== UC5 =====
+        System.out.println("\n=== UC5: Preserve Insertion Order of Bogies ===");
+
+        Set<String> formation = new LinkedHashSet<>();
+
+        formation.add("Engine");
+        formation.add("Sleeper");
+        formation.add("Cargo");
+        formation.add("Guard");
+
+        formation.add("Sleeper"); // duplicate (ignored)
+
+        System.out.println("Final Train Formation:");
+        System.out.println(formation);
+
+        System.out.println("\nNote: LinkedHashSet preserves insertion order and removes duplicates automatically.");
+        System.out.println("UC5 formation setup completed...");
     }
 }
