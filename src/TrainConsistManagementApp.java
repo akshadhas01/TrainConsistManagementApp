@@ -17,7 +17,7 @@ class Bogie {
     }
 }
 
-// ===== Goods Bogie Class (UC12) =====
+// ===== Goods Bogie Class =====
 class GoodsBogie {
     String type;
     String cargo;
@@ -38,9 +38,7 @@ public class TrainConsistManagementApp {
 
         // ===== UC1 =====
         System.out.println("=== Train Consist Management App ===");
-
         List<String> trainConsist = new ArrayList<>();
-
         System.out.println("Train initialized successfully...");
         System.out.println("Initial Bogie Count: " + trainConsist.size());
         System.out.println("Current Train Consist: " + trainConsist);
@@ -48,160 +46,146 @@ public class TrainConsistManagementApp {
 
 
         // ===== UC2 =====
-        System.out.println("\n=== UC2: Add Passenger Bogies ===");
-
+        System.out.println("\n=== UC2 ===");
         List<String> passengerBogies = new ArrayList<>();
-
         passengerBogies.add("Sleeper");
         passengerBogies.add("AC Chair");
         passengerBogies.add("First Class");
-
         passengerBogies.remove("AC Chair");
-
-        if (passengerBogies.contains("Sleeper")) {
-            System.out.println("Sleeper bogie exists");
-        }
+        System.out.println(passengerBogies);
 
 
         // ===== UC3 =====
-        System.out.println("\n=== UC3: Unique Bogie IDs ===");
-
-        Set<String> bogies = new HashSet<>();
-
-        bogies.add("BG101");
-        bogies.add("BG102");
-        bogies.add("BG101");
-
-        System.out.println(bogies);
+        System.out.println("\n=== UC3 ===");
+        Set<String> ids = new HashSet<>();
+        ids.add("BG101");
+        ids.add("BG101");
+        ids.add("BG102");
+        System.out.println(ids);
 
 
         // ===== UC4 =====
-        System.out.println("\n=== UC4: Ordered Train ===");
-
-        List<String> ordered = new LinkedList<>();
-
-        ordered.add("Engine");
-        ordered.add("Sleeper");
-        ordered.add("Cargo");
-        ordered.add("Guard");
-
-        ordered.add(2, "Pantry");
-        ordered.remove(0);
-        ordered.remove(ordered.size() - 1);
-
-        System.out.println(ordered);
+        System.out.println("\n=== UC4 ===");
+        List<String> list = new LinkedList<>();
+        list.add("Engine");
+        list.add("Sleeper");
+        list.add("Cargo");
+        list.add("Guard");
+        list.add(2, "Pantry");
+        list.remove(0);
+        list.remove(list.size() - 1);
+        System.out.println(list);
 
 
         // ===== UC5 =====
-        System.out.println("\n=== UC5: LinkedHashSet ===");
-
-        Set<String> formation = new LinkedHashSet<>();
-        formation.add("Engine");
-        formation.add("Sleeper");
-        formation.add("Sleeper");
-
-        System.out.println(formation);
+        System.out.println("\n=== UC5 ===");
+        Set<String> set = new LinkedHashSet<>();
+        set.add("Engine");
+        set.add("Sleeper");
+        set.add("Sleeper");
+        System.out.println(set);
 
 
         // ===== UC6 =====
-        System.out.println("\n=== UC6: HashMap ===");
-
+        System.out.println("\n=== UC6 ===");
         Map<String, Integer> map = new HashMap<>();
         map.put("Sleeper", 72);
         map.put("AC Chair", 56);
-
         for (Map.Entry<String, Integer> e : map.entrySet()) {
             System.out.println(e.getKey() + " -> " + e.getValue());
         }
 
 
         // ===== UC7 =====
-        System.out.println("\n=== UC7: Sorting ===");
-
+        System.out.println("\n=== UC7 ===");
         List<Bogie> bogieList = new ArrayList<>();
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 56));
         bogieList.add(new Bogie("First Class", 24));
-
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
-
-        for (Bogie b : bogieList) {
-            System.out.println(b);
-        }
+        for (Bogie b : bogieList) System.out.println(b);
 
 
         // ===== UC8 =====
-        System.out.println("\n=== UC8: Filter ===");
-
+        System.out.println("\n=== UC8 ===");
         List<Bogie> filtered = bogieList.stream()
                 .filter(b -> b.capacity > 50)
                 .collect(Collectors.toList());
-
-        for (Bogie b : filtered) {
-            System.out.println(b);
-        }
+        for (Bogie b : filtered) System.out.println(b);
 
 
         // ===== UC9 =====
-        System.out.println("\n=== UC9: Grouping ===");
-
+        System.out.println("\n=== UC9 ===");
         Map<String, List<Bogie>> grouped =
-                bogieList.stream()
-                        .collect(Collectors.groupingBy(b -> b.name));
-
+                bogieList.stream().collect(Collectors.groupingBy(b -> b.name));
         System.out.println(grouped);
 
 
         // ===== UC10 =====
-        System.out.println("\n=== UC10: Total Capacity ===");
-
+        System.out.println("\n=== UC10 ===");
         int total = bogieList.stream()
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
-
-        System.out.println("Total: " + total);
+        System.out.println("Total Capacity: " + total);
 
 
         // ===== UC11 =====
-        System.out.println("\n=== UC11: Regex Validation ===");
-
+        System.out.println("\n=== UC11 ===");
         String trainId = "TRN-1234";
-        Pattern p = Pattern.compile("TRN-\\d{4}");
-
-        if (p.matcher(trainId).matches()) {
+        if (Pattern.matches("TRN-\\d{4}", trainId)) {
             System.out.println("Valid Train ID");
         }
 
 
         // ===== UC12 =====
-        System.out.println("\n=== UC12: Safety Compliance Check ===");
-
+        System.out.println("\n=== UC12 ===");
         List<GoodsBogie> goods = new ArrayList<>();
-
         goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
         goods.add(new GoodsBogie("Open", "Coal"));
-        goods.add(new GoodsBogie("Box", "Grain"));
-        goods.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
 
-        System.out.println("Goods Bogies:");
-        for (GoodsBogie g : goods) {
-            System.out.println(g);
+        boolean safe = goods.stream()
+                .allMatch(g -> !g.type.equals("Cylindrical") || g.cargo.equals("Petroleum"));
+
+        System.out.println("Safety: " + safe);
+
+
+        // ===== UC13 =====
+        System.out.println("\n=== UC13: Performance Comparison ===");
+
+        // Create large dataset
+        List<Bogie> bigList = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            bigList.add(new Bogie("Sleeper", i % 100));
         }
 
-        // Safety Rule:
-        // Cylindrical → ONLY Petroleum
-        boolean isSafe = goods.stream()
-                .allMatch(g ->
-                        !g.type.equals("Cylindrical") ||
-                                g.cargo.equals("Petroleum")
-                );
+        // LOOP APPROACH
+        long startLoop = System.nanoTime();
 
-        if (isSafe) {
-            System.out.println("\nTrain is SAFETY COMPLIANT ✅");
-        } else {
-            System.out.println("\nTrain is NOT SAFE ❌");
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bigList) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
         }
 
-        System.out.println("\nUC12 completed...");
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // STREAM APPROACH
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bigList.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Results
+        System.out.println("Loop Time (ns): " + loopTime);
+        System.out.println("Stream Time (ns): " + streamTime);
+        System.out.println("Same Result Size: " + (loopResult.size() == streamResult.size()));
+
+        System.out.println("\nUC13 completed...");
     }
 }
