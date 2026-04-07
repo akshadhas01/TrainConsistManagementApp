@@ -72,7 +72,7 @@ public class TrainConsistManagementApp {
             List<String> trainConsist = new ArrayList<>();
             System.out.println("Initial Bogie Count: " + trainConsist.size());
 
-            // ===== UC7 sample data =====
+            // ===== UC7 Sample Data =====
             List<Bogie> bogieList = new ArrayList<>();
             bogieList.add(new Bogie("Sleeper", 72));
             bogieList.add(new Bogie("AC Chair", 56));
@@ -82,7 +82,6 @@ public class TrainConsistManagementApp {
             int total = bogieList.stream()
                     .map(b -> b.capacity)
                     .reduce(0, Integer::sum);
-
             System.out.println("Total Capacity: " + total);
 
             // ===== UC11 =====
@@ -100,22 +99,13 @@ public class TrainConsistManagementApp {
             g2.assignCargo("Petroleum");
 
             // ===== UC16 =====
-            System.out.println("\n=== UC16: Manual Sorting using Bubble Sort ===");
+            System.out.println("\n=== UC16: Bubble Sort ===");
 
             int[] capacities = {72, 56, 24, 70, 60};
 
-            // Display original
-            System.out.println("Original Capacities:");
-            for (int c : capacities) {
-                System.out.print(c + " ");
-            }
-
-            // ---- BUBBLE SORT ----
             for (int i = 0; i < capacities.length - 1; i++) {
                 for (int j = 0; j < capacities.length - 1 - i; j++) {
-
                     if (capacities[j] > capacities[j + 1]) {
-                        // swap
                         int temp = capacities[j];
                         capacities[j] = capacities[j + 1];
                         capacities[j + 1] = temp;
@@ -123,13 +113,26 @@ public class TrainConsistManagementApp {
                 }
             }
 
-            // Display sorted
-            System.out.println("\n\nSorted Capacities (Ascending):");
-            for (int c : capacities) {
-                System.out.print(c + " ");
-            }
+            System.out.println("Sorted Capacities: " + Arrays.toString(capacities));
 
-            System.out.println("\n\nUC16 sorting completed...");
+
+            // ===== UC17 =====
+            System.out.println("\n=== UC17: Built-in Sorting using Arrays.sort() ===");
+
+            String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+            // Before sorting
+            System.out.println("Original Bogie Types:");
+            System.out.println(Arrays.toString(bogieTypes));
+
+            // Built-in sorting
+            Arrays.sort(bogieTypes);
+
+            // After sorting
+            System.out.println("Sorted Bogie Types (Alphabetical):");
+            System.out.println(Arrays.toString(bogieTypes));
+
+            System.out.println("\nUC17 sorting completed...");
 
         } catch (InvalidCapacityException e) {
             System.out.println("Error: " + e.getMessage());
