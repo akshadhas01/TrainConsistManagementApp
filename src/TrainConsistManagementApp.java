@@ -63,11 +63,33 @@ class GoodsBogie {
 // ===== Main Application =====
 public class TrainConsistManagementApp {
 
-    // ===== UC18: Linear Search Method =====
+    // ===== UC18: Linear Search =====
     public static boolean linearSearch(String[] bogieIds, String key) {
-        for (int i = 0; i < bogieIds.length; i++) {
-            if (bogieIds[i].equals(key)) {
-                return true; // Early termination
+        for (String id : bogieIds) {
+            if (id.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ===== UC19: Binary Search =====
+    public static boolean binarySearch(String[] bogieIds, String key) {
+
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2; // safer mid calculation
+
+            int cmp = key.compareTo(bogieIds[mid]);
+
+            if (cmp == 0) {
+                return true; // found
+            } else if (cmp > 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
         return false;
@@ -83,24 +105,24 @@ public class TrainConsistManagementApp {
             List<String> trainConsist = new ArrayList<>();
             System.out.println("Initial Bogie Count: " + trainConsist.size());
 
-            // ===== UC7 Sample Data =====
+            // ===== UC7 =====
             List<Bogie> bogieList = new ArrayList<>();
             bogieList.add(new Bogie("Sleeper", 72));
             bogieList.add(new Bogie("AC Chair", 56));
             bogieList.add(new Bogie("First Class", 24));
 
-            // ===== UC10: Total Capacity =====
+            // ===== UC10 =====
             int total = bogieList.stream()
                     .map(b -> b.capacity)
                     .reduce(0, Integer::sum);
             System.out.println("Total Capacity: " + total);
 
-            // ===== UC11: Regex Validation =====
+            // ===== UC11 =====
             if (Pattern.matches("TRN-\\d{4}", "TRN-1234")) {
                 System.out.println("Valid Train ID");
             }
 
-            // ===== UC15: Cargo Safety =====
+            // ===== UC15 =====
             System.out.println("\n=== UC15: Safe Cargo Assignment ===");
 
             GoodsBogie g1 = new GoodsBogie("Cylindrical");
@@ -109,7 +131,7 @@ public class TrainConsistManagementApp {
             GoodsBogie g2 = new GoodsBogie("Rectangular");
             g2.assignCargo("Petroleum");
 
-            // ===== UC16: Bubble Sort =====
+            // ===== UC16 =====
             System.out.println("\n=== UC16: Bubble Sort ===");
 
             int[] capacities = {72, 56, 24, 70, 60};
@@ -126,36 +148,48 @@ public class TrainConsistManagementApp {
 
             System.out.println("Sorted Capacities: " + Arrays.toString(capacities));
 
-            // ===== UC17: Built-in Sort =====
+            // ===== UC17 =====
             System.out.println("\n=== UC17: Built-in Sorting ===");
 
             String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
-
-            System.out.println("Original Bogie Types:");
-            System.out.println(Arrays.toString(bogieTypes));
+            System.out.println("Before Sorting: " + Arrays.toString(bogieTypes));
 
             Arrays.sort(bogieTypes);
 
-            System.out.println("Sorted Bogie Types:");
-            System.out.println(Arrays.toString(bogieTypes));
+            System.out.println("After Sorting: " + Arrays.toString(bogieTypes));
 
-            // ===== UC18: Linear Search =====
-            System.out.println("\n=== UC18: Linear Search for Bogie ID ===");
+            // ===== UC18 =====
+            System.out.println("\n=== UC18: Linear Search ===");
 
             String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+            System.out.println("Bogie IDs: " + Arrays.toString(bogieIds));
 
-            System.out.println("Available Bogie IDs:");
-            System.out.println(Arrays.toString(bogieIds));
-
-            System.out.print("Enter Bogie ID to search: ");
+            System.out.print("Enter Bogie ID to search (Linear): ");
             String searchKey = sc.nextLine();
 
-            boolean found = linearSearch(bogieIds, searchKey);
-
-            if (found) {
-                System.out.println("Bogie ID " + searchKey + " FOUND in the train consist.");
+            if (linearSearch(bogieIds, searchKey)) {
+                System.out.println("FOUND using Linear Search");
             } else {
-                System.out.println("Bogie ID " + searchKey + " NOT FOUND.");
+                System.out.println("NOT FOUND using Linear Search");
+            }
+
+            // ===== UC19 =====
+            System.out.println("\n=== UC19: Binary Search ===");
+
+            String[] bogieIdsBinary = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+
+            // IMPORTANT: sort first
+            Arrays.sort(bogieIdsBinary);
+
+            System.out.println("Sorted Bogie IDs: " + Arrays.toString(bogieIdsBinary));
+
+            System.out.print("Enter Bogie ID to search (Binary): ");
+            String key = sc.nextLine();
+
+            if (binarySearch(bogieIdsBinary, key)) {
+                System.out.println("FOUND using Binary Search");
+            } else {
+                System.out.println("NOT FOUND using Binary Search");
             }
 
             sc.close();
