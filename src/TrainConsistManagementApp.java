@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.regex.*;
 
 // ===== Bogie Class =====
 class Bogie {
@@ -196,13 +197,40 @@ public class TrainConsistManagementApp {
             System.out.println(b);
         }
 
-        // Stream aggregation
         int totalCapacity = capacityList.stream()
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
 
         System.out.println("\nTotal Seating Capacity of Train: " + totalCapacity);
 
-        System.out.println("\nUC10 aggregation completed...");
+
+        // ===== UC11 =====
+        System.out.println("\n=== UC11: Validate Train ID & Cargo Code ===");
+
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
+
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
+
+        Pattern tPattern = Pattern.compile(trainPattern);
+        Pattern cPattern = Pattern.compile(cargoPattern);
+
+        Matcher tMatcher = tPattern.matcher(trainId);
+        Matcher cMatcher = cPattern.matcher(cargoCode);
+
+        if (tMatcher.matches()) {
+            System.out.println("Train ID is VALID: " + trainId);
+        } else {
+            System.out.println("Train ID is INVALID: " + trainId);
+        }
+
+        if (cMatcher.matches()) {
+            System.out.println("Cargo Code is VALID: " + cargoCode);
+        } else {
+            System.out.println("Cargo Code is INVALID: " + cargoCode);
+        }
+
+        System.out.println("\nUC11 validation completed...");
     }
 }
