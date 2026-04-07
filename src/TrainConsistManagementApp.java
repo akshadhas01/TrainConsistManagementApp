@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.regex.*;
 
 // ===== Custom Exception (UC14) =====
@@ -61,11 +60,23 @@ class GoodsBogie {
     }
 }
 
+// ===== Main Application =====
 public class TrainConsistManagementApp {
+
+    // ===== UC18: Linear Search Method =====
+    public static boolean linearSearch(String[] bogieIds, String key) {
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(key)) {
+                return true; // Early termination
+            }
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
 
         try {
+            Scanner sc = new Scanner(System.in);
 
             // ===== UC1 =====
             System.out.println("=== Train Consist Management App ===");
@@ -78,18 +89,18 @@ public class TrainConsistManagementApp {
             bogieList.add(new Bogie("AC Chair", 56));
             bogieList.add(new Bogie("First Class", 24));
 
-            // ===== UC10 =====
+            // ===== UC10: Total Capacity =====
             int total = bogieList.stream()
                     .map(b -> b.capacity)
                     .reduce(0, Integer::sum);
             System.out.println("Total Capacity: " + total);
 
-            // ===== UC11 =====
+            // ===== UC11: Regex Validation =====
             if (Pattern.matches("TRN-\\d{4}", "TRN-1234")) {
                 System.out.println("Valid Train ID");
             }
 
-            // ===== UC15 =====
+            // ===== UC15: Cargo Safety =====
             System.out.println("\n=== UC15: Safe Cargo Assignment ===");
 
             GoodsBogie g1 = new GoodsBogie("Cylindrical");
@@ -98,7 +109,7 @@ public class TrainConsistManagementApp {
             GoodsBogie g2 = new GoodsBogie("Rectangular");
             g2.assignCargo("Petroleum");
 
-            // ===== UC16 =====
+            // ===== UC16: Bubble Sort =====
             System.out.println("\n=== UC16: Bubble Sort ===");
 
             int[] capacities = {72, 56, 24, 70, 60};
@@ -115,24 +126,39 @@ public class TrainConsistManagementApp {
 
             System.out.println("Sorted Capacities: " + Arrays.toString(capacities));
 
-
-            // ===== UC17 =====
-            System.out.println("\n=== UC17: Built-in Sorting using Arrays.sort() ===");
+            // ===== UC17: Built-in Sort =====
+            System.out.println("\n=== UC17: Built-in Sorting ===");
 
             String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
-            // Before sorting
             System.out.println("Original Bogie Types:");
             System.out.println(Arrays.toString(bogieTypes));
 
-            // Built-in sorting
             Arrays.sort(bogieTypes);
 
-            // After sorting
-            System.out.println("Sorted Bogie Types (Alphabetical):");
+            System.out.println("Sorted Bogie Types:");
             System.out.println(Arrays.toString(bogieTypes));
 
-            System.out.println("\nUC17 sorting completed...");
+            // ===== UC18: Linear Search =====
+            System.out.println("\n=== UC18: Linear Search for Bogie ID ===");
+
+            String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+            System.out.println("Available Bogie IDs:");
+            System.out.println(Arrays.toString(bogieIds));
+
+            System.out.print("Enter Bogie ID to search: ");
+            String searchKey = sc.nextLine();
+
+            boolean found = linearSearch(bogieIds, searchKey);
+
+            if (found) {
+                System.out.println("Bogie ID " + searchKey + " FOUND in the train consist.");
+            } else {
+                System.out.println("Bogie ID " + searchKey + " NOT FOUND.");
+            }
+
+            sc.close();
 
         } catch (InvalidCapacityException e) {
             System.out.println("Error: " + e.getMessage());
