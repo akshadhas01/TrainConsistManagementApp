@@ -1,4 +1,21 @@
-import java.util.*;   // ✅ This single line avoids all import errors
+import java.util.*;
+
+// ===== Custom Bogie Class =====
+class Bogie {
+    String name;
+    int capacity;
+
+    // Constructor
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    // Display format
+    public String toString() {
+        return name + " -> " + capacity;
+    }
+}
 
 public class TrainConsistManagementApp {
 
@@ -46,12 +63,10 @@ public class TrainConsistManagementApp {
         bogies.add("BG103");
         bogies.add("BG104");
 
-        bogies.add("BG101"); // duplicate
-        bogies.add("BG102"); // duplicate
+        bogies.add("BG101");
+        bogies.add("BG102");
 
         System.out.println("Bogie IDs After Insertion: " + bogies);
-        System.out.println("Note: Duplicates are automatically ignored by HashSet.");
-        System.out.println("UC3 uniqueness validation completed...");
 
 
         // ===== UC4 =====
@@ -65,25 +80,18 @@ public class TrainConsistManagementApp {
         orderedTrain.add("Cargo");
         orderedTrain.add("Guard");
 
-        System.out.println("Initial Train Consist:");
-        System.out.println(orderedTrain);
+        System.out.println("Initial Train Consist: " + orderedTrain);
 
         orderedTrain.add(2, "Pantry Car");
-
-        System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
-        System.out.println(orderedTrain);
+        System.out.println("After Insert: " + orderedTrain);
 
         orderedTrain.remove(0);
         orderedTrain.remove(orderedTrain.size() - 1);
-
-        System.out.println("\nAfter Removing First and Last Bogie:");
-        System.out.println(orderedTrain);
-
-        System.out.println("UC4 ordered consist operations completed...");
+        System.out.println("After Removal: " + orderedTrain);
 
 
         // ===== UC5 =====
-        System.out.println("\n=== UC5: Preserve Insertion Order of Bogies ===");
+        System.out.println("\n=== UC5: Preserve Insertion Order ===");
 
         Set<String> formation = new LinkedHashSet<>();
 
@@ -91,32 +99,52 @@ public class TrainConsistManagementApp {
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
+        formation.add("Sleeper");
 
-        formation.add("Sleeper"); // duplicate ignored
-
-        System.out.println("Final Train Formation:");
-        System.out.println(formation);
-
-        System.out.println("\nNote: LinkedHashSet preserves insertion order and removes duplicates automatically.");
-        System.out.println("UC5 formation setup completed...");
+        System.out.println("Formation: " + formation);
 
 
         // ===== UC6 =====
-        System.out.println("\n=== UC6: Map Bogie to Capacity (HashMap) ===");
+        System.out.println("\n=== UC6: Map Bogie to Capacity ===");
 
-        Map<String, Integer> bogieCapacity = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
 
-        bogieCapacity.put("Sleeper", 72);
-        bogieCapacity.put("AC Chair", 56);
-        bogieCapacity.put("First Class", 24);
-        bogieCapacity.put("Cargo", 120);
+        map.put("Sleeper", 72);
+        map.put("AC Chair", 56);
+        map.put("First Class", 24);
+        map.put("Cargo", 120);
 
-        System.out.println("Bogie Capacity Details:");
-
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        for (Map.Entry<String, Integer> e : map.entrySet()) {
+            System.out.println(e.getKey() + " -> " + e.getValue());
         }
 
-        System.out.println("\nUC6 bogie-capacity mapping completed...");
+
+        // ===== UC7 =====
+        System.out.println("\n=== UC7: Sort Bogies by Capacity ===");
+
+        List<Bogie> bogieList = new ArrayList<>();
+
+        // Add objects
+        bogieList.add(new Bogie("Sleeper", 72));
+        bogieList.add(new Bogie("AC Chair", 56));
+        bogieList.add(new Bogie("First Class", 24));
+        bogieList.add(new Bogie("General", 90));
+
+        // Before sorting
+        System.out.println("Before Sorting:");
+        for (Bogie b : bogieList) {
+            System.out.println(b);
+        }
+
+        // Sorting using Comparator (Lambda)
+        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
+
+        // After sorting
+        System.out.println("\nAfter Sorting by Capacity:");
+        for (Bogie b : bogieList) {
+            System.out.println(b);
+        }
+
+        System.out.println("\nUC7 sorting completed...");
     }
 }
