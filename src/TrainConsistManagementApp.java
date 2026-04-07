@@ -43,10 +43,8 @@ class GoodsBogie {
         this.shape = shape;
     }
 
-    // UC15: Safe cargo assignment
     void assignCargo(String cargo) {
         try {
-            // RULE: Rectangular cannot carry Petroleum
             if (shape.equalsIgnoreCase("Rectangular") && cargo.equalsIgnoreCase("Petroleum")) {
                 throw new CargoSafetyException("Unsafe cargo assignment!");
             }
@@ -61,10 +59,6 @@ class GoodsBogie {
             System.out.println("Cargo validation completed for " + shape + " bogie");
         }
     }
-
-    public String toString() {
-        return shape + " -> " + cargo;
-    }
 }
 
 public class TrainConsistManagementApp {
@@ -78,80 +72,64 @@ public class TrainConsistManagementApp {
             List<String> trainConsist = new ArrayList<>();
             System.out.println("Initial Bogie Count: " + trainConsist.size());
 
-            // ===== UC2 =====
-            List<String> passenger = new ArrayList<>();
-            passenger.add("Sleeper");
-            passenger.add("AC Chair");
-
-            // ===== UC3 =====
-            Set<String> ids = new HashSet<>();
-            ids.add("BG101");
-            ids.add("BG101");
-
-            // ===== UC4 =====
-            List<String> list = new LinkedList<>();
-            list.add("Engine");
-            list.add("Sleeper");
-
-            // ===== UC5 =====
-            Set<String> set = new LinkedHashSet<>();
-            set.add("Engine");
-            set.add("Engine");
-
-            // ===== UC6 =====
-            Map<String, Integer> map = new HashMap<>();
-            map.put("Sleeper", 72);
-
-            // ===== UC7 =====
+            // ===== UC7 sample data =====
             List<Bogie> bogieList = new ArrayList<>();
             bogieList.add(new Bogie("Sleeper", 72));
             bogieList.add(new Bogie("AC Chair", 56));
-
-            // ===== UC8 =====
-            List<Bogie> filtered = bogieList.stream()
-                    .filter(b -> b.capacity > 50)
-                    .collect(Collectors.toList());
-
-            // ===== UC9 =====
-            Map<String, List<Bogie>> grouped =
-                    bogieList.stream().collect(Collectors.groupingBy(b -> b.name));
+            bogieList.add(new Bogie("First Class", 24));
 
             // ===== UC10 =====
             int total = bogieList.stream()
                     .map(b -> b.capacity)
                     .reduce(0, Integer::sum);
 
+            System.out.println("Total Capacity: " + total);
+
             // ===== UC11 =====
             if (Pattern.matches("TRN-\\d{4}", "TRN-1234")) {
                 System.out.println("Valid Train ID");
             }
 
-            // ===== UC12 =====
-            List<GoodsBogie> goods = new ArrayList<>();
-            goods.add(new GoodsBogie("Cylindrical"));
-            goods.add(new GoodsBogie("Rectangular"));
-
-            // ===== UC13 =====
-            long start = System.nanoTime();
-            for (Bogie b : bogieList) {
-                if (b.capacity > 50) {}
-            }
-            long end = System.nanoTime();
-
-            // ===== UC14 =====
-            Bogie valid = new Bogie("First Class", 24);
-            System.out.println("Created: " + valid);
-
             // ===== UC15 =====
             System.out.println("\n=== UC15: Safe Cargo Assignment ===");
 
             GoodsBogie g1 = new GoodsBogie("Cylindrical");
-            g1.assignCargo("Petroleum");   // SAFE
+            g1.assignCargo("Petroleum");
 
             GoodsBogie g2 = new GoodsBogie("Rectangular");
-            g2.assignCargo("Petroleum");   // UNSAFE
+            g2.assignCargo("Petroleum");
 
-            System.out.println("\nUC15 runtime handling completed...");
+            // ===== UC16 =====
+            System.out.println("\n=== UC16: Manual Sorting using Bubble Sort ===");
+
+            int[] capacities = {72, 56, 24, 70, 60};
+
+            // Display original
+            System.out.println("Original Capacities:");
+            for (int c : capacities) {
+                System.out.print(c + " ");
+            }
+
+            // ---- BUBBLE SORT ----
+            for (int i = 0; i < capacities.length - 1; i++) {
+                for (int j = 0; j < capacities.length - 1 - i; j++) {
+
+                    if (capacities[j] > capacities[j + 1]) {
+                        // swap
+                        int temp = capacities[j];
+                        capacities[j] = capacities[j + 1];
+                        capacities[j + 1] = temp;
+                    }
+                }
+            }
+
+            // Display sorted
+            System.out.println("\n\nSorted Capacities (Ascending):");
+            for (int c : capacities) {
+                System.out.print(c + " ");
+            }
+
+            System.out.println("\n\nUC16 sorting completed...");
 
         } catch (InvalidCapacityException e) {
             System.out.println("Error: " + e.getMessage());
