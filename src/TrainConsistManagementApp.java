@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
@@ -23,18 +24,15 @@ public class TrainConsistManagementApp {
 
         List<String> passengerBogies = new ArrayList<>();
 
-        // Add bogies
         passengerBogies.add("Sleeper");
         passengerBogies.add("AC Chair");
         passengerBogies.add("First Class");
 
         System.out.println("After Adding: " + passengerBogies);
 
-        // Remove bogie
         passengerBogies.remove("AC Chair");
         System.out.println("After Removing AC Chair: " + passengerBogies);
 
-        // Check existence
         if (passengerBogies.contains("Sleeper")) {
             System.out.println("Sleeper bogie exists");
         }
@@ -45,23 +43,50 @@ public class TrainConsistManagementApp {
         // ===== UC3 =====
         System.out.println("\n=== UC3: Track Unique Bogie IDs ===");
 
-        // Create HashSet (no duplicates allowed)
         Set<String> bogies = new HashSet<>();
 
-        // Add IDs (including duplicates)
         bogies.add("BG101");
         bogies.add("BG102");
         bogies.add("BG103");
         bogies.add("BG104");
 
-        // Duplicate entries (ignored automatically)
-        bogies.add("BG101");
-        bogies.add("BG102");
+        bogies.add("BG101"); // duplicate
+        bogies.add("BG102"); // duplicate
 
-        // Display result
         System.out.println("Bogie IDs After Insertion: " + bogies);
-
         System.out.println("Note: Duplicates are automatically ignored by HashSet.");
         System.out.println("UC3 uniqueness validation completed...");
+
+
+        // ===== UC4 =====
+        System.out.println("\n=== UC4: Maintain Ordered Bogie Consist ===");
+
+        // Create LinkedList (maintains order)
+        List<String> orderedTrain = new LinkedList<>();
+
+        // Add bogies
+        orderedTrain.add("Engine");
+        orderedTrain.add("Sleeper");
+        orderedTrain.add("AC");
+        orderedTrain.add("Cargo");
+        orderedTrain.add("Guard");
+
+        System.out.println("Initial Train Consist:");
+        System.out.println(orderedTrain);
+
+        // Insert Pantry Car at position 2
+        orderedTrain.add(2, "Pantry Car");
+
+        System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
+        System.out.println(orderedTrain);
+
+        // Remove first and last bogie
+        orderedTrain.remove(0); // remove first
+        orderedTrain.remove(orderedTrain.size() - 1); // remove last
+
+        System.out.println("\nAfter Removing First and Last Bogie:");
+        System.out.println(orderedTrain);
+
+        System.out.println("UC4 ordered consist operations completed...");
     }
 }
